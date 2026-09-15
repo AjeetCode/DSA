@@ -1,0 +1,1 @@
+// Search for a given number in a sorted array.
