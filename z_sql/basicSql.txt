@@ -1,0 +1,686 @@
+4
+
+What is difference between normal folders and databases?
+	"A folder is just a storage location for files, whereas a database not only stores data but also organizes, relates, secures, and retrieves it efficiently using queries. In simple terms, a folder stores information, but a database helps you manage and use that information intelligently."
+If the interviewer asks for an example:
+	"For example, I can store thousands of student files in folders, but if I want all students with marks above 80%, a database can find them instantly using a query, while folders cannot."
+
+5
+
+What is database?
+"A database is an organized collection of data that is stored in a structured way so it can be efficiently accessed, managed, updated, and retrieved."
+
+6
+
+Types of databases?
+Databases are mainly of two types: Relational databases, which store data in tables (e.g., MySQL), and NoSQL databases, which store flexible, unstructured data (e.g., MongoDB). Other types include hierarchical, network, object-oriented, and distributed databases.
+
+7
+
+Sql, mySql or postgerySql, databases.
+"SQL is a query language used to communicate with relational databases. MySQL and PostgreSQL are DBMSs that store and manage databases and understand SQL commands."
+
+
+
+
+"Can we create a database without a DBMS?"
+	Yes, technically we can store data in files and create our own logic to manage it. However, without a DBMS we would have to handle searching, updating, deleting, security, concurrency, backups, and data integrity ourselves. That's why DBMSs like MySQL, PostgreSQL, and MongoDB are used in real-world applications.
+
+8
+
+People often say:
+	"I am using the MySQL database."
+Informally that's accepted, but technically:
+	• Database = Collection of tables/data 
+	• MySQL = DBMS software that manages those databases.
+• college → Database 
+• MySQL → DBMS.
+• SQL → Language
+
+
+9
+
+The most common questions asked in the interviews about sql?
+1. What is a Database?
+Answer:
+A database is an organized collection of data that can be stored, managed, and retrieved efficiently.
+Example: Student records, employee details, product information.
+
+2. What is DBMS?
+Answer:
+A Database Management System (DBMS) is software used to create, manage, and manipulate databases.
+Examples:
+	• MySQL 
+	• PostgreSQL 
+	• MongoDB 
+
+3. What is SQL?
+Answer:
+SQL (Structured Query Language) is a language used to communicate with relational databases.
+Example:
+
+SELECT * FROM Student;
+
+4. What is the Difference Between SQL and MySQL?
+Answer:
+SQL	MySQL
+Language	DBMS
+Used to write queries	Used to store/manage databases
+Standard language	Software
+Interview Line:
+	SQL is the language, while MySQL is a DBMS that understands SQL.
+
+5. What is a Primary Key?
+Answer:
+A Primary Key uniquely identifies each row in a table.
+
+CREATE TABLE Student(
+    id INT PRIMARY KEY,
+    name VARCHAR(50)
+);
+Example:
+id	name
+1	Ajeet
+2	Rahul
+id is the Primary Key.
+
+6. What is a Foreign Key?
+Answer:
+A Foreign Key creates a relationship between two tables.
+
+CREATE TABLE Orders(
+    order_id INT PRIMARY KEY,
+    customer_id INT,
+    FOREIGN KEY(customer_id)
+    REFERENCES Customer(id)
+);
+
+7. Difference Between DELETE, TRUNCATE, and DROP?
+DELETE					TRUNCATE			DROP
+Deletes selected rows	Deletes all rows	Deletes table
+Can use WHERE			Cannot use WHERE	Removes structure
+Can rollback			Faster				Table no longer exists
+
+Example:
+DELETE FROM Student WHERE id=1;
+
+8. What is the Difference Between WHERE and HAVING?
+WHERE
+	• Filters rows before grouping. 
+
+SELECT * FROM Student
+WHERE marks > 80;
+HAVING
+	• Filters groups after grouping. 
+
+SELECT department, COUNT(*)
+FROM Employee
+GROUP BY department
+HAVING COUNT(*) > 5;
+
+9. What are Joins?
+Answer:
+Joins combine data from multiple tables.
+Common Joins
+	• INNER JOIN 
+	• LEFT JOIN 
+	• RIGHT JOIN 
+	• FULL JOIN 
+Example:
+
+SELECT c.name, o.order_id
+FROM Customer c
+INNER JOIN Orders o
+ON c.id = o.customer_id;
+This is one of the most asked SQL topics.
+
+10. What is the Difference Between WHERE and GROUP BY?
+WHERE
+	• Filters records. 
+
+SELECT * FROM Employee
+WHERE salary > 50000;
+GROUP BY
+	• Groups similar records. 
+
+SELECT department, COUNT(*)
+FROM Employee
+GROUP BY department;
+
+Bonus Questions (Also Very Common)
+	1. What is a Candidate Key? 
+	2. What is a Composite Key? 
+	3. What is Normalization? 
+	4. What are the types of Joins? 
+	5. What is the difference between CHAR and VARCHAR? 
+	6. What is a Subquery? 
+	7. What is a View? 
+	8. What is an Index? 
+	9. What is the difference between UNION and UNION ALL? 
+	10. Write a query to find the second highest salary. 
+
+If I were preparing for a SQL interview as a fresher, I would master these topics in this order:
+	1. Database, DBMS, SQL 
+	2. Primary Key, Foreign Key 
+	3. CRUD Operations (SELECT, INSERT, UPDATE, DELETE) 
+	4. WHERE, ORDER BY, GROUP BY, HAVING 
+	5. Aggregate Functions (COUNT, SUM, AVG, MAX, MIN) 
+	6. Joins 
+	7. Subqueries 
+	8. Normalization 
+	9. Indexes 
+	10. Second Highest Salary & other query-based problems
+
+
+10
+
+What are Clauses in SQL?
+Clauses are keywords or parts of an SQL query that perform specific tasks. They help us filter, sort, group, or limit data in a query.
+Clause	Purpose
+SELECT	Select columns.
+FROM	Specify table.
+WHERE	Filter rows.
+ORDER BY	Sort data.
+GROUP BY	Group similar records.
+HAVING	Filter groups.
+DISTINCT	Remove duplicates.
+LIMIT	Restrict number of rows returned.
+
+
+11
+
+Group by, order by, where, aggregation function.
+Group by
+=> 
+
+12
+
+What is the order of execution of code : 
+FROM
+WHERE
+GROUP BY
+HAVING
+SELECT
+ORDER BY
+LIMIT
+
+"Find the second highest salary"
+SELECT DISTINCT salary
+FROM employee
+ORDER BY salary DESC
+LIMIT 1 OFFSET 1;
+
+MySQL Behavior
+If ONLY_FULL_GROUP_BY mode is enabled (default in modern MySQL):
+SELECT product_id, product_name, category
+FROM product
+GROUP BY category;
+You will get an error like:
+Expression #1 of SELECT list is not in GROUP BY clause
+and contains nonaggregated column 'product.product_id' 
+
+
+
+
+
+13
+
+Creating tables : 
+
+CREATE TABLE customer (
+    customer_id INT PRIMARY KEY,
+    customer_name VARCHAR(50),
+    email VARCHAR(100),
+    city VARCHAR(50)
+);
+
+CREATE TABLE product (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(50),
+    price DECIMAL(10,2),
+    category VARCHAR(50)
+);
+
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY,
+    customer_id INT,
+    product_id INT,
+    quantity INT,
+    order_date DATE,
+    FOREIGN KEY (customer_id) REFERENCES customer(customer_id),
+    FOREIGN KEY (product_id) REFERENCES product(product_id)
+);
+
+CREATE TABLE payment (
+    payment_id INT PRIMARY KEY,
+    order_id INT,
+    amount DECIMAL(10,2),
+    payment_method VARCHAR(20),
+    payment_date DATE,
+    FOREIGN KEY (order_id) REFERENCES orders(order_id)
+);
+
+CREATE TABLE rating (
+    rating_id INT PRIMARY KEY,
+    customer_id INT,
+    product_id INT,
+    rating INT,
+    review VARCHAR(100),
+    FOREIGN KEY (customer_id) REFERENCES customer(customer_id),
+    FOREIGN KEY (product_id) REFERENCES product(product_id)
+);
+
+
+14.
+
+Questions on tables :
+
+-- Question answer
+
+-- Display all products.
+select * from  product; 
+-- Display only product names.
+select product_name from product;
+-- Display product name and price.
+select product_name, price from product;
+-- Display all products belonging to the Electronics category.
+select * from product where category = "Electronics";
+-- Display all products whose price is greater than 5000.
+select * from product where price > 5000;
+-- Display all products whose price is less than 2000.
+select * from product where price < 2000;
+-- Display products whose category is Accessories.
+select * from product where category ="accessories";
+-- Display product names and categories only.
+select product_name, category from product;
+-- Display all products whose price is exactly 7000.
+select * from product where price = 7000;
+-- Display the details of the product with product_id = 110.
+select * from product where product_id = 110;
+
+
+-- Display products whose price is greater than 2000 and less than 10000.
+select * from product where price > 2000 and price < 10000;
+-- Display products whose category is Electronics and price is greater than 10000.
+select * from product where price > 10000 and category = "electronics";
+-- Display products whose category is not Electronics.
+select * from product where not category = "Electronics";
+-- Display products whose price is either 7000 or 8000.
+select * from product where price in (7000, 8000);
+-- Display products whose category is Electronics or Storage.
+select * from product where category = "electronics" or category = "storage"; 
+-- Display products whose product name starts with 'M'.
+select * from product where product_name like "m%";
+-- Display products whose product name ends with 'r'.
+select * from product where product_name like "%r";
+-- Display products whose product name contains 'o'.
+select * from product where product_name like"%o%";
+-- Display products whose product name has exactly 5 characters.
+select * from product where product_name like"____";
+-- Display products whose price is not equal to 1500.
+select * from product where price = 1500;
+
+-- Display all products sorted by price in ascending order.
+select * from product order by price asc;
+-- Display all products sorted by price in descending order.
+select * from product order by price desc; 
+-- Display product name and price sorted by product name alphabetically.
+select product_name, price from product order by product_name; 
+-- Display the 5 most expensive products.
+select * from product order by price desc limit 5;
+-- Display the 3 cheapest products.
+select * from product order by price limit 3;
+
+-- Find the total number of products.
+select count(*) from product; 
+-- Find the maximum product price.
+select max(price) from product;
+-- Find the minimum product price.
+select min(price) from product;
+-- Find the average price of all products.
+select avg(price) from product;
+-- Find the total value of all product prices.
+select sum(price) from product;
+
+-- Count how many products belong to each category.
+select count(category), category from product group by category;
+-- Find the average price of products in each category.
+select avg(price), category from product group by category;
+-- Find the maximum price in each category.
+select max(price), category from product group by category; 
+-- Display categories having more than 2 products.
+select count(category), category from product group by category having count(*) > 2;
+-- Display categories whose average price is greater than 5000.
+select avg(price), category, product_name from product group by category ,product_name having avg(price) > 5000;
+
+-- Display the product(s) having the highest price.
+select * from product where price = (select max(price) from product);
+-- Display the product(s) having the lowest price.
+select * from product where price = (select min(price) from product); 
+-- Display products whose price is greater than the average product price.
+select * from product where price > (select avg(price) from product);
+-- Display products whose price is less than the average price of their category.      (doubt....) look into it
+with cte as (select avg(price),category from product group by category);
+-- Display the second most expensive product.
+select * from product where price < (select price from product order by price desc limit 1) order by price desc limit 1;
+
+-- ----------------------------------------------
+-- GROUP BY (2 Columns) - Basic
+-- Count the number of products in each category and price combination.
+select count(*), category, price from product group by category, price;
+-- Find the maximum price for each category and product_name combination.
+SELECT max(price), CATEGORY, PRODUCT_NAME FROM PRODUCT GROUP BY CATEGORY, PRODUCT_NAME;
+-- Find the total number of records for each category and product_name combination.
+select count(*), category, product_name from product group by category, product_name;  
+-- GROUP BY (3 Columns) - Basic 
+-- Count products grouped by category, product_name, and price.
+select count(*), category, product_name, price from product category, product_name, price; 
+-- Display all unique combinations of category, product_name, and price.
+select category, product_name, price from product group by category, product_name, price;
+-- Find the total number of records for each category, product_name, and price combination.
+select count(*), category, product_name, price from product group by category, product_name, price;
+-- ORDER BY (2 Columns) - Basic
+-- Display all products sorted by category and then price in ascending order.
+select * from product order by category, price;
+-- Display all products sorted by price and then product_name in ascending order.
+select * from product order by price, product_name;
+-- Display all products sorted by category in ascending order and price in descending order.
+select * from product order by category asc, price desc;
+-- ORDER BY (3 Columns) - Basic
+-- Display all products sorted by category, price, and product_name in ascending order.
+select * from product order by category, price, product_name;
+-- Display all products sorted by category (ASC), price (DESC), and product_name (ASC).
+select * from product order by category asc, price desc, product_name asc;
+-- Display all products sorted by price (ASC), category (ASC), and product_id (ASC).
+select *  from product order by price asc, category asc, product_id asc;
+
+15
+
+
+
+16
+
+What is a JOIN?
+A JOIN is used to combine rows from two or more tables based on a related column.
+
+Customer
+customer_id	customer_name
+1	Ajeet
+2	Rahul
+3	Mohan
+Orders
+order_id	customer_id	product
+101	1	Laptop
+102	1	Mouse
+103	2	Keyboard
+INNER JOIN. 
+"Give me ALL columns from BOTH tables."
+
+SELECT *
+FROM customer c
+INNER JOIN orders o
+ON c.customer_id = o.customer_id;
+
+customer_id	customer_name	order_id	customer_id	product
+1	Ajeet	101	1	Laptop
+1	Ajeet	102	1	Mouse
+2	Rahul	103	2	Keyboard
+
+RIGHT JOIN
+
+SELECT *
+FROM customer c
+RIGHT JOIN orders o
+ON c.customer_id = o.customer_id;
+Rule
+	Keep ALL rows from the RIGHT table (orders).
+	For matching rows, bring data from the left table (customer).
+Exact Output
+c.customer_id	customer_name	order_id	o.customer_id	product
+1	Ajeet	101	1	Laptop
+1	Ajeet	102	1	Mouse
+2	Rahul	103	2	Keyboard
+
+
+LEFT JOIN 
+"Keep all rows from the left table (customer), even if no match exists."
+
+SELECT *
+FROM customer c
+LEFT JOIN orders o
+ON c.customer_id = o.customer_id;
+you get:
+c.customer_id	customer_name	order_id	o.customer_id	product
+1	Ajeet	101	1	Laptop
+1	Ajeet	102	1	Mouse
+2	Rahul	103	2	Keyboard
+3	Mohan	NULL	NULL	NULL
+Because LEFT JOIN says:
+
+FULL OUTER JOIN
+Rule: Keep everything from BOTH tables.
+
+SELECT *
+FROM customer c
+FULL OUTER JOIN orders o
+ON c.customer_id = o.customer_id;
+Final Output
+c.customer_id	customer_name	order_id	o.customer_id	product
+1	Ajeet	101	1	Laptop
+1	Ajeet	102	1	Mouse
+2	Rahul	103	2	Keyboard
+3	Mohan	NULL	NULL	NULL
+NULL	NULL	104	5	Monitor
+
+SELECT *
+FROM customer c
+LEFT JOIN orders o
+ON c.customer_id = o.customer_id
+
+UNION
+
+SELECT *
+FROM customer c
+RIGHT JOIN orders o
+ON c.customer_id = o.customer_id;
+
+
+CROSS JOIN
+It says: "Take each row from the first table and combine it with EVERY row from the second table."
+
+SELECT *
+FROM customer
+CROSS JOIN product;
+
+Final Output
+customer_name	product_name
+Ajeet	Laptop
+Ajeet	Mouse
+Ajeet	Keyboard
+Rahul	Laptop
+Rahul	Mouse
+Rahul	Keyboard
+Mohan	Laptop
+Mohan	Mouse
+Mohan	Keyboard
+
+-------------------------------------------------------------------------------
+
+-- INNER JOIN Questions (1-10)
+
+-- Display customer name and order id.
+select customer_name, order_id from customer c inner join orders o on c.customer_id = o.customer_id;
+-- Display customer name and order date.
+select customer_name, order_date from customer c inner join orders o on c.customer_id = o.customer_id;
+-- Display customer name and product id they ordered
+select customer_name, product_id from customer c inner join orders o on c.customer_id = o.customer_id; 
+-- Display customer name and product name they ordered.
+select c.customer_name, p.product_name from customer c inner join orders o on c.customer_id = o.customer_id inner join product p on p.product_id = o.product_id;
+-- Display order id, product name, and quantity.
+select o.order_id, p.product_name, o.quantity from orders o inner join product p on p.product_id = o.product_id;
+-- Display product name and its category for every order.
+select p.product_name, p.category from product p inner join orders o on p.product_id = o.product_id;
+-- Display customer name, product name, and order date.
+select c.customer_name, p.product_name, o.order_date from customer c inner join orders o on c.customer_id = o.customer_id inner join product p on p.product_id = o.product_id;
+-- Display payment amount along with customer name.
+select p.amount, c.customer_name from customer c inner join orders o on o.customer_id = c.customer_id inner join payment p on o.order_id = p.order_id;
+-- Display payment method and product name.
+select pr.product_name, pa.amount from product pr inner join orders o on o.product_id = pr.product_id inner join payment pa on o.order_id = pa.order_id; 
+-- Display customer name, product name, quantity, and payment amount.
+select c.customer_name, pr.product_name, o.quantity, pa.amount 
+from customer c 
+inner join orders o 
+on c.customer_id = o.customer_id 
+inner join  product pr 
+on pr.product_id = o.product_id
+inner join payment pa
+on pa.order_id = o.order_id;
+
+
+-- LEFT JOIN Questions (11-20)
+
+-- Display all customers and their orders.
+select *
+from customer c
+left join orders o 
+on o.customer_id = c.customer_id;
+-- (Show customers even if they haven't placed orders.)
+select * from customer c left join orders o on o.customer_id = c.customer_id;
+-- Display all customers and the products they ordered.
+select c.customer_name, p.product_name from customer c left join orders o on c.customer_id = o.customer_id left join product p on p.product_id = o.product_id; 
+-- Display all products and their orders.
+Select * from product p left join orders o on p.product_id = o.product_id;
+
+
+-- (Show products even if nobody ordered them.)
+
+-- Display all products and customer names who purchased them.
+select p.product_name, c.customer_name from product p left join orders o on p.product_id = o.product_id left join customer c  on o.customer_id = c.customer_id;
+-- Display all customers and their ratings.
+select c.customer_name, r.rating from customer c left join rating r on c.customer_id = r.customer_id;
+-- Display all products and their ratings.
+select p.product_name, r.rating from product p left join rating r on p.product_id = r.product_id;
+-- Display all orders and payment details.
+select * from orders o left join payment p on o.order_id = p.order_id;
+-- Display all customers and payment information.
+select * from customer c left join orders o on o.customer_id = c.customer_id left join payment p on o.order_id = p.order_id; 
+-- Display all customers, products, and ratings.
+select customer_name, product_name, rating from customer c left join rating r on c.customer_id = r.customer_id left join product p on p.product_id = r.product_id; 
+-- Display all products with their order quantities.
+select product_name, quantity from product p left join orders o on p.product_id = o.product_id;
+
+
+-- RIGHT JOIN Questions (21-25)
+
+-- Display all orders and customer details.
+select * from customer c right join orders o on c.customer_id = o.customer_id;
+-- Display all products and order information.
+select * from orders o right join product p on o.product_id = p.product_id;
+-- Display all payments and order details.
+select * from orders o right join payment p on o.order_id = p.order_id;
+-- Display all ratings and customer details.
+select * from customer c right join rating r on c.customer_id = r.customer_id;
+-- Display all ratings and product details.
+select * from product p right join rating r on p.product_id = r.product_id;
+
+-- CROSS JOIN Questions (26-28)
+
+-- Display every customer with every product.
+select * from customer cross join product;
+-- Display every customer with every payment method.
+select * from customer cross join payment;
+-- Display every product with every customer.
+select * from product cross join customer;
+
+
+-- SELF JOIN Questions (29-31)
+
+-- (Practice on Customer table)
+-- Find customers belonging to the same city.
+select c1.customer_name, c2.customer_name, c1.city from customer c1 join customer c2 on c1.city = c2.city and c1.customer_id < c2.customer_id;
+-- Display pairs of customers living in the same city.
+-- Find customers having the same city but different customer ids.
+
+
+-- Multi-Table JOIN Questions (32-40)
+
+-- Display customer name, product name, and quantity.
+select c.customer_name, p.product_name, o.quantity 
+from customer c
+inner join orders o 
+on c.customer_id = o.customer_id
+inner join product p
+on p.product_id = o.product_id;
+-- Display customer name, product name, and payment amount.
+select c.customer_name, pr.product_name, pa.amount 
+from customer c
+inner join orders o 
+on c.customer_id = o.customer_id
+inner join  payment pa
+on o.order_id = pa.order_id
+inner join product pr
+on pr.product_id = o.product_id;
+ 
+-- Display customer name, order date, and payment method.
+select c.customer_name, o.order_date, pa.payment_method 
+from customer c
+inner join orders o
+on c.customer_id = o.customer_id
+inner join payment pa
+on o.order_id = pa.order_id;
+-- Display customer name, product name, rating, and review.
+select c.customer_name, pr.product_name, r.rating, r.review 
+from customer c
+inner join rating r
+on c.customer_id = r.customer_id
+inner join product pr
+on pr.product_id = r.product_id;
+-- Display product name and average rating.
+select pr.product_name, avg(rating) 
+from product pr
+inner join rating r
+on pr.product_id = r.product_id
+group by product_name;
+-- Display customer name and total payment amount.
+select c.customer_name, sum(amount) 
+from customer c
+inner join orders o
+on o.customer_id = c.customer_id
+inner join payment pa
+on pa.order_id = o.order_id
+group by customer_name;
+
+-- Display product name and total quantity sold.
+select pr.product_name, sum(quantity) 
+from  product pr
+inner join orders o
+on o.product_id = pr.product_id
+group by product_name;
+
+-- Display customer name and number of orders placed.
+select c.customer_name, c.email, o.order_id 
+from customer c
+inner join orders o 
+on o.customer_id = c.customer_id;
+ 
+-- Display the customer who spent the most money.
+select c.customer_name, sum(amount)
+from customer c
+inner join orders o
+on o.customer_id = c.customer_id
+inner join  payment pa
+on pa.order_id = o.order_id
+group by customer_name
+limit 1;
+
+-----------------------------------------------------------------------------------------
+Finding missing records: Very important for interviews.
+Examples :
+	• Customers who never ordered 
+	• Products never sold .
+	• Orders without payments.
+	• Employees without managers.
+	
+	These are usually solved using : LEFT JOIN + WHERE ... IS NULL.
+	
+
