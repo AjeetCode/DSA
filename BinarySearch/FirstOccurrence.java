@@ -1,1 +1,0 @@
-// Given a sorted array containing duplicates, find the first occurrence of a target value.
